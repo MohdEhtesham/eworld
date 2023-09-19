@@ -15,7 +15,6 @@ import Buttoncomponent from '../../components/butoncomponents';
 import { Routes } from '../../navigation/Routes';
 import styles from './style';
 
-const { width, height } = Dimensions.get('window');
 
 const MAX_EMAIL_DIGITS = 50;
 const MIN_PASSWORD_LENGTH = 6;

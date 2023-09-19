@@ -1,5 +1,6 @@
 
 import {StyleSheet,Dimensions} from 'react-native';
+import { ROBOTO_BOLDITALIC } from '../../assets/fonts';
 const { width, height } = Dimensions.get('window');
 
 
@@ -16,7 +17,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: width * 0.04, // Responsive margin
   },
-  Cont: {
+  inputContainer: {
     width: width * 0.8,
     marginBottom: width * 0.04,
     position: 'relative',

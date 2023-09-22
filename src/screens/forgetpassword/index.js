@@ -16,6 +16,8 @@ import styles from './style';
 
 const { width, height } = Dimensions.get('window');
 
+const isPad = Platform.OS === 'ios' && width >= 768;
+
 const MAX_EMAIL_DIGITS = 50;
 
 const ForgotPasswordScreen = ({navigation}) => {
@@ -49,7 +51,7 @@ const ForgotPasswordScreen = ({navigation}) => {
       <Text style={styles.title}>Forgot Password</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, isPad && styles.inputPad]}
           placeholder="Email"
           onChangeText={(text) => setEmail(text)}
           onBlur={() => setEmailTouched(true)}
@@ -58,7 +60,7 @@ const ForgotPasswordScreen = ({navigation}) => {
         {emailTouched && (
           <Icon
             name={isValidEmail(email) ? 'check-circle' : 'times-circle-o'}
-            size={24}
+            size={isPad ? 30 : 24}
             color={isValidEmail(email) ? 'green' : 'red'}
             style={styles.checkIcon}
           />

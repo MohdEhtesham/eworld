@@ -2,7 +2,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Logopath} from '../assets/images';
-import { verticalScale } from '../components/responsive';
+
 
 // const CustomTab = (props) => {
 const   CustomTab = ({state, descriptors, navigation}) => {

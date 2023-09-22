@@ -11,20 +11,26 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Buttoncomponent from '../../components/butoncomponents';
+import CustomTextInput from '../../components/textinputcomponent';
 import { Routes } from '../../navigation/Routes';
 import styles from './style';
+import {
+  emailRegex,
+  MAX_EMAIL_DIGITS,
+
+} from '../../components/regex';
 
 const { width, height } = Dimensions.get('window');
 
 const isPad = Platform.OS === 'ios' && width >= 768;
 
-const MAX_EMAIL_DIGITS = 50;
+
 
 const ForgotPasswordScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [emailTouched, setEmailTouched] = useState(false);
 
-  const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
 
   const isValidEmail = (text) => {
     if (text.length > MAX_EMAIL_DIGITS) {
@@ -50,7 +56,19 @@ const ForgotPasswordScreen = ({navigation}) => {
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
       <Text style={styles.title}>Forgot Password</Text>
       <View style={styles.inputContainer}>
-        <TextInput
+      <CustomTextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={text => setEmail(text)}
+          onBlur={() => setEmailTouched(true)}
+          isValid={emailTouched ? isValidEmail(email) : ''}
+          maxLength={MAX_EMAIL_DIGITS} // Set the maxLength
+          errorMessage={
+            !isValidEmail(email) && emailTouched ? 'Invalid email format' : null
+          }
+          onPress={() => setEmail('')}
+        />
+        {/* <TextInput
           style={[styles.input, isPad && styles.inputPad]}
           placeholder="Email"
           onChangeText={(text) => setEmail(text)}
@@ -70,10 +88,12 @@ const ForgotPasswordScreen = ({navigation}) => {
         )}
         {emailTouched && email.length >= MAX_EMAIL_DIGITS && (
           <Text style={styles.infoText}>Email exceeds maximum length</Text>
-        )}
+        )} */}
       </View>
-      <Buttoncomponent onPress={handleResetPassword} value={"Reset Password"} />
-      <TouchableOpacity style={styles.signup}>
+      <Buttoncomponent onPress={handleResetPassword} value={"Proceed"} />
+      <TouchableOpacity style={styles.signup}
+      onPress={()=>{navigation.navigate(Routes.Login)}}
+      >
         <Text style={styles.signupText}>Remember your password? Login</Text>
       </TouchableOpacity>
     </ScrollView>

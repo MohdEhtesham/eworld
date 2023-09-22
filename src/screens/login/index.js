@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -13,35 +13,35 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Buttoncomponent from '../../components/butoncomponents';
-import { Routes } from '../../navigation/Routes';
+import {Routes} from '../../navigation/Routes';
 import styles from './style';
-import { emailRegex, passwordRegex, MAX_EMAIL_DIGITS ,
-  MAX_PASSWORD_DIGITS, MIN_PASSWORD_LENGTH  } from '../../components/regex';
+import {
+  emailRegex,
+  passwordRegex,
+  MAX_EMAIL_DIGITS,
+  MAX_PASSWORD_DIGITS,
+  MIN_PASSWORD_LENGTH,
+} from '../../components/regex';
 import CustomTextInput from '../../components/textinputcomponent';
 
-
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const isPad = Platform.OS === 'ios' && width >= 768;
 
- 
-
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
 
-  
-
-  const isValidEmail = (text) => {
+  const isValidEmail = text => {
     if (text.length > MAX_EMAIL_DIGITS) {
       return false;
     }
     return emailRegex.test(text);
   };
 
-  const isValidPassword = (text) => {
+  const isValidPassword = text => {
     if (text.length > MAX_PASSWORD_DIGITS) {
       return false;
     }
@@ -49,7 +49,6 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const passwordInputRef = useRef();
-
 
   const handleLogin = () => {
     setEmailTouched(true);
@@ -62,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
       alert('Invalid email address');
     } else if (!isPasswordValid) {
       alert(
-        `Invalid password. Password must contain at least ${MIN_PASSWORD_LENGTH} characters, including at least one uppercase letter, one lowercase letter, and one digit.`
+        `Invalid password. Password must contain at least ${MIN_PASSWORD_LENGTH} characters, including at least one uppercase letter, one lowercase letter, and one digit.`,
       );
     } else {
       console.log('Email:', email);
@@ -77,26 +76,24 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled">
       <Text style={styles.title}>Login</Text>
       <View style={styles.inputContainer}>
-      <CustomTextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        onBlur={() => setEmailTouched(true)}
-        isValid={emailTouched? isValidEmail(email):""}
-       maxLength={MAX_EMAIL_DIGITS} // Set the maxLength
-  errorMessage={
-    (!isValidEmail(email) && emailTouched ? 'Invalid email format' : null)
-
-  }
-
-        onSubmitEditing={handleEmailSubmit}
-        onPress ={()=>setEmail("")}
-
-      />
+        <CustomTextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={text => setEmail(text)}
+          onBlur={() => setEmailTouched(true)}
+          isValid={emailTouched ? isValidEmail(email) : ''}
+          maxLength={MAX_EMAIL_DIGITS} // Set the maxLength
+          errorMessage={
+            !isValidEmail(email) && emailTouched ? 'Invalid email format' : null
+          }
+          onSubmitEditing={handleEmailSubmit}
+          onPress={() => setEmail('')}
+        />
 
         {/* <TextInput
           style={[styles.input, isPad && styles.inputPad]}
@@ -122,17 +119,22 @@ const LoginScreen = ({ navigation }) => {
         )} */}
       </View>
       <View style={styles.inputContainer}>
-      <CustomTextInput
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        maxLength={MAX_PASSWORD_DIGITS}
-        onChangeText={(text) => setPassword(text)}
-        onBlur={() => setPasswordTouched(true)}
-        isValid={passwordTouched? isValidPassword(password):""}
-        errorMessage= {passwordTouched ?" Password must contain at least 6  characters, including at least one uppercase letter, one lowercase letter, and one digit.":""}
-        inputRef={passwordInputRef}
-     />
+        <CustomTextInput
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          maxLength={MAX_PASSWORD_DIGITS}
+          onChangeText={text => setPassword(text)}
+          onBlur={() => setPasswordTouched(true)}
+          isValid={passwordTouched ? isValidPassword(password) : ''}
+          errorMessage={
+            passwordTouched
+              ? ' Password must contain at least 6  characters, including at least one uppercase letter, one lowercase letter, and one digit.'
+              : ''
+          }
+          inputRef={passwordInputRef}
+          onPress={() => setPassword('')}
+        />
         {/* <TextInput
           style={[styles.input, isPad && styles.inputPad]}
           placeholder="Password"
@@ -160,11 +162,15 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.infoText}>Password exceeds maximum length</Text>
         )} */}
       </View>
-      <Buttoncomponent onPress={handleLogin} value={"Login"} />
-      <TouchableOpacity onPress={() => navigation.navigate(Routes.Forgetpassword)} style={styles.forgotPassword}>
+      <Buttoncomponent onPress={handleLogin} value={'Login'} />
+      <TouchableOpacity
+        onPress={() => navigation.navigate(Routes.Forgetpassword)}
+        style={styles.forgotPassword}>
         <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate(Routes.Signup)} style={styles.signup}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(Routes.Signup)}
+        style={styles.signup}>
         <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -172,4 +178,3 @@ const LoginScreen = ({ navigation }) => {
 };
 
 export default LoginScreen;
-
